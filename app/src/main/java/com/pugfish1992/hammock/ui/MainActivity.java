@@ -18,10 +18,10 @@ import com.pugfish1992.hammock.model.Work;
 public class MainActivity extends AppCompatActivity
         implements
         NewWorkDialog.OnCreateNewWorkListener,
-        WorkAdapter.ItemCardClickListener {
+        WorkAdapterBase.ItemCardClickListener {
 
     private RecyclerView mProjectList;
-    private WorkAdapter mProjectAdapter;
+    private ProjectAdapter mProjectAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        mProjectAdapter = new WorkAdapter(Work.getRootWorks(), this);
+        mProjectAdapter = new ProjectAdapter(Work.getRootWorks(), this, this);
         mProjectList = (RecyclerView) findViewById(R.id.recycler_view);
         mProjectList.setLayoutManager(new LinearLayoutManager(this));
         mProjectList.setAdapter(mProjectAdapter);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * INTERFACE IMPL -> WorkAdapter.ItemCardClickListener
+     * INTERFACE IMPL -> WorkAdapterBase.ItemCardClickListener
      * ---------- */
 
     @Override

@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.google.common.base.Preconditions;
@@ -22,14 +21,14 @@ import java.util.Calendar;
 
 public class WorkDetailsActivity extends AppCompatActivity
         implements
-        WorkAdapter.ItemCardClickListener,
+        WorkAdapterBase.ItemCardClickListener,
         NewWorkDialog.OnCreateNewWorkListener,
         TextInputDialog.TextInputListener {
 
     public static final String KEY_TARGET_WORK_ID = "WorkDetailsActivity:targetWorkId";
 
     private Work mTargetWork;
-    private WorkAdapter mSubWorkAdapter;
+    private WorkAdapterBase mSubWorkAdapter;
 
     public static Bundle makeExtras(@NonNull Work targetWork) {
         Bundle bundle = new Bundle();
@@ -96,7 +95,7 @@ public class WorkDetailsActivity extends AppCompatActivity
     }
 
     /**
-     * INTERFACE IMPL -> WorkAdapter.ItemCardClickListener
+     * INTERFACE IMPL -> WorkAdapterBase.ItemCardClickListener
      * ---------- */
 
     @Override

@@ -70,7 +70,7 @@ public class NewWorkDialog extends DialogFragment {
                             dialog.dismiss();
 
                         } else {
-                            inputNameLayout.setError("Input a name.");
+                            inputNameLayout.setError("Input a title.");
                         }
                     }
                 });

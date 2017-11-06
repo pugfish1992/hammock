@@ -26,6 +26,11 @@ public abstract class WorkAdapterBase<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
+    public long getItemId(int position) {
+        return mWorks.get(position).getId();
+    }
+
+    @Override
     public int getItemCount() {
         return mWorks.size();
     }

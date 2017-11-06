@@ -71,7 +71,7 @@ public class WorkDetailsActivity extends AppCompatActivity
             }
         });
 
-        mSubWorkAdapter = new WorkAdapter(mTargetWork.getSubWorks(), this);
+        mSubWorkAdapter = new WorkAdapter(mTargetWork.getSubWorks(), this, this);
 
         RecyclerView workList = (RecyclerView) findViewById(R.id.recycler_view);
         workList.setLayoutManager(new LinearLayoutManager(this));

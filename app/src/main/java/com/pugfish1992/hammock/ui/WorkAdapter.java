@@ -1,6 +1,9 @@
 package com.pugfish1992.hammock.ui;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +21,18 @@ import java.util.List;
 
 public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
 
-    public WorkAdapter(List<Work> works, @NonNull ItemCardClickListener listener) {
+    private final Context mContext;
+
+    public WorkAdapter(List<Work> works, @NonNull ItemCardClickListener listener, @NonNull Context context) {
         super(works, listener);
+        mContext = context;
     }
 
     @Override
     public WorkHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_work_card, parent, false);
-        final WorkHolder holder = new WorkHolder(view);
+        final WorkHolder holder = new WorkHolder(view, mContext);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,9 +46,9 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
     @Override
     public void onBindViewHolder(WorkHolder holder, int position) {
         Work work = getAt(position);
-        holder.name.setText(work.getOverview().getTitle());
+        holder.title.setText(work.getOverview().getTitle());
         holder.summary.setText(work.getOverview().getSummary());
-        holder.commentCount.setText(work.getCommentCount() + " comments");
+        holder.commentAdapter.swapData(work.getComments());
     }
 
     /* ------------------------------------------------------------------------------- *
@@ -51,15 +57,25 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
 
     static class WorkHolder extends RecyclerView.ViewHolder {
 
-        final TextView name;
+        final TextView title;
         final TextView summary;
-        final TextView commentCount;
+        final RecyclerView commentList;
+        final MiniCommentAdapter commentAdapter;
 
-        WorkHolder(View view) {
+        WorkHolder(View view, Context context) {
             super(view);
-            name = view.findViewById(R.id.txt_name);
+            title = view.findViewById(R.id.txt_title);
             summary = view.findViewById(R.id.txt_summary);
-            commentCount = view.findViewById(R.id.txt_comment_count);
+
+            commentAdapter = new MiniCommentAdapter(2, null);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            commentList = view.findViewById(R.id.recycler_comment_list);
+            commentList.setLayoutManager(layoutManager);
+            commentList.setAdapter(commentAdapter);
+
+            DividerItemDecoration dividerItemDecoration =
+                    new DividerItemDecoration(context, layoutManager.getOrientation());
+            commentList.addItemDecoration(dividerItemDecoration);
         }
     }
 }

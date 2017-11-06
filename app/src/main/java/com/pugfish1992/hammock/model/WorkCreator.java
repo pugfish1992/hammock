@@ -21,6 +21,11 @@ public class WorkCreator {
         return this;
     }
 
+    public WorkCreator isCompleted(boolean isCompleted) {
+        mWorkData.isCompleted = isCompleted;
+        return this;
+    }
+
     public Work save() {
         if (mWorkData.id_Overview == Comment.INVALID_ID) {
             throw new IllegalStateException(

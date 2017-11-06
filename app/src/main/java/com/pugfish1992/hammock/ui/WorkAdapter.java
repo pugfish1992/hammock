@@ -2,6 +2,7 @@ package com.pugfish1992.hammock.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,6 +50,7 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
         holder.title.setText(work.getOverview().getTitle());
         holder.summary.setText(work.getOverview().getSummary());
         holder.commentAdapter.swapData(work.getComments());
+        holder.completedMask.setVisibility(work.isCompleted() ? View.VISIBLE : View.GONE);
     }
 
     /* ------------------------------------------------------------------------------- *
@@ -57,15 +59,19 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
 
     static class WorkHolder extends RecyclerView.ViewHolder {
 
+        final CardView baseCard;
         final TextView title;
         final TextView summary;
         final RecyclerView commentList;
+        final ViewGroup completedMask;
         final MiniCommentAdapter commentAdapter;
 
         WorkHolder(View view, Context context) {
             super(view);
+            baseCard = (CardView) view;
             title = view.findViewById(R.id.txt_title);
             summary = view.findViewById(R.id.txt_summary);
+            completedMask = view.findViewById(R.id.completed_mask);
 
             commentAdapter = new MiniCommentAdapter(2, null);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);

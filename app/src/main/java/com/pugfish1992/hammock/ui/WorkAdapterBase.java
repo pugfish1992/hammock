@@ -2,10 +2,12 @@ package com.pugfish1992.hammock.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.google.common.base.Preconditions;
 import com.pugfish1992.hammock.model.Work;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public abstract class WorkAdapterBase<VH extends RecyclerView.ViewHolder>
     private final ItemCardClickListener mItemCardClickListener;
 
     WorkAdapterBase(List<Work> works, @NonNull ItemCardClickListener listener) {
-        mWorks = (works != null) ? works : Collections.<Work>emptyList();
+        mWorks = (works != null) ? works : new ArrayList<Work>();
         mItemCardClickListener = Preconditions.checkNotNull(listener);
         this.setHasStableIds(true);
     }

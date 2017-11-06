@@ -127,8 +127,10 @@ public class Comment implements ModelConstant {
      * ---------- */
 
     public static List<Comment> findCommentsOf(@NonNull Work work) {
+        List<CommentData> dataList = CommentData.listItems();
+        if (dataList == null) return new ArrayList<>(0);
         List<Comment> comments = new ArrayList<>();
-        for (CommentData data : CommentData.listItems()) {
+        for (CommentData data : dataList) {
             if (data.id_ParentWork == work.getId()) {
                 comments.add(new Comment(data.id));
             }

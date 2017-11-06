@@ -53,6 +53,15 @@ public class Work implements ModelConstant {
         return mOverview;
     }
 
+    public boolean isCompleted() {
+        return mWorkData.isCompleted;
+    }
+
+    public void setIsCompleted(boolean isCompleted) {
+        mWorkData.isCompleted = isCompleted;
+        mWorkData.save();
+    }
+
     /**
      * SUB-WORKS
      * ---------- */
@@ -284,7 +293,7 @@ public class Work implements ModelConstant {
     @NonNull
     public static List<Work> getRootWorks() {
         List<WorkData> dataList = WorkData.listItems();
-        if (dataList == null) return Collections.emptyList();
+        if (dataList == null) return new ArrayList<>(0);
         List<Work> works = new ArrayList<>();
         for (WorkData data : dataList) {
             if (!hasParentWork(data)) {

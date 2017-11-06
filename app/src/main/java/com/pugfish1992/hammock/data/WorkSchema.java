@@ -15,4 +15,5 @@ public class WorkSchema implements ModelConstant {
     final long id = INVALID_ID;
     final long id_Overview = INVALID_ID;
     final long id_ParentWork = INVALID_ID;
+    final boolean isCompleted = false;
 }

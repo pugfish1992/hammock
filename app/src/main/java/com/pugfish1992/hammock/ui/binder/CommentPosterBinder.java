@@ -12,11 +12,17 @@ import com.pugfish1992.hammock.R;
 
 public class CommentPosterBinder {
 
+    public interface ActionListener {
+        void onPosterClick();
+    }
+
     // UI
     private final View mRoot;
     private final TextView mBodyText;
     private final TextView mTimeLabel;
     private final TextView mNavigationMessage;
+
+    private ActionListener mActionListener;
 
     public CommentPosterBinder(View root) {
         mRoot = root.findViewById(R.id.poster_rl_root_view);
@@ -24,7 +30,20 @@ public class CommentPosterBinder {
         mTimeLabel = root.findViewById(R.id.poster_txt_time_label);
         mNavigationMessage = root.findViewById(R.id.poster_txt_navigation_message);
 
+        mRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mActionListener != null) {
+                    mActionListener.onPosterClick();
+                }
+            }
+        });
+
         setShowNavigationMessage(false);
+    }
+
+    public void setActionListener(ActionListener actionListener) {
+        mActionListener = actionListener;
     }
 
     public void setShowNavigationMessage(boolean showNavigationMessage) {

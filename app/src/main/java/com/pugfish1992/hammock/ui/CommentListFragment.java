@@ -46,16 +46,16 @@ public class CommentListFragment extends Fragment implements BottomSheet {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comment_list, container, false);
 
-        if (mUseAsBottomSheet) {
-            mCommentPosterBinder = new CommentPosterBinder(view);
-            mCommentsViewerBinder = new CommentsViewerBinder(view,
-                    new CommentsViewerBinder.ActionListener() {
-                        @Override
-                        public void onCloseButtonClick() {
-                            mInteractionListener.onCloseFragment();
-                        }
-                    });
-        }
+//        if (mUseAsBottomSheet) {
+//            mCommentPosterBinder = new CommentPosterBinder(view);
+//            mCommentsViewerBinder = new CommentsViewerBinder(view,
+//                    new CommentsViewerBinder.ActionListener() {
+//                        @Override
+//                        public void onCloseButtonClick() {
+//                            mInteractionListener.onCloseFragment();
+//                        }
+//                    });
+//        }
 
         return view;
     }

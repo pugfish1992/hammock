@@ -6,6 +6,7 @@
     android:background="@color/primary">
 
     <RelativeLayout
+        android:id="@+id/comments_viewer_rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:paddingLeft="8dp"

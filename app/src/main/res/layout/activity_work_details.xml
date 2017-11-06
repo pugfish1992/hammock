@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/cl_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -28,13 +29,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <!-- Bottom Sheet -->
-    <fragment
-        android:id="@+id/frg_comment_list_as_bottom_sheet"
-        android:name="com.pugfish1992.hammock.ui.CommentListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:behavior_peekHeight="98dp"
-        app:layout_behavior="@string/bottom_sheet_behavior"/>
+    <include layout="@layout/comments_viewer_bottom_sheet"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

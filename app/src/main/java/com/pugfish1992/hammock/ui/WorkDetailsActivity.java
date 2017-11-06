@@ -18,6 +18,7 @@ import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Comment;
 import com.pugfish1992.hammock.model.CommentCreator;
 import com.pugfish1992.hammock.model.Work;
+import com.pugfish1992.hammock.ui.binder.CommentsViewerBottomSheetBinder;
 
 import java.util.Calendar;
 
@@ -85,19 +86,10 @@ public class WorkDetailsActivity extends AppCompatActivity
 
         // # Bottom Sheet
 
-        final CommentListFragment commentListFragment =
-                (CommentListFragment) getSupportFragmentManager().findFragmentById(R.id.frg_comment_list_as_bottom_sheet);
-
-        mSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.frg_comment_list_as_bottom_sheet));
-        mSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                commentListFragment.onBottomSheetStateChanged(newState);
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {}
-        });
+        CommentsViewerBottomSheetBinder bottomSheetBinder =
+                new CommentsViewerBottomSheetBinder(findViewById(R.id.cl_root), this, mTargetWork.getComments());
+        final int sheetElevation = getResources().getDimensionPixelSize(R.dimen.work_details_activity_bottom_sheet_elevation);
+        bottomSheetBinder.setSheetElevation(sheetElevation);
     }
 
     private void onAddNewWork() {

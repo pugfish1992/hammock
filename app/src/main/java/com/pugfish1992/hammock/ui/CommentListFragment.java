@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.pugfish1992.hammock.R;
+import com.pugfish1992.hammock.ui.binder.CommentPosterBinder;
+import com.pugfish1992.hammock.ui.binder.CommentsViewerBinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,18 +31,14 @@ public class CommentListFragment extends Fragment implements BottomSheet {
         void onCloseFragment();
     }
 
-    private boolean mIsViewCreated;
     private InteractionListener mInteractionListener;
-
-    // UI
-    private ImageView mCloseIconButton;
 
     // In the case of using this fragment as a BottomSheet...
     @BottomSheetBehavior.State private static final int INVALID_SHEET_STATE = -5062;
     @BottomSheetBehavior.State  private int mPrevSheetState = INVALID_SHEET_STATE;
     private boolean mUseAsBottomSheet = true;
-    @Nullable private ViewGroup mCommentListViewRoot;
-    @Nullable private ViewGroup mCommentViewRoot;
+    @Nullable private CommentsViewerBinder mCommentsViewerBinder;
+    @Nullable private CommentPosterBinder mCommentPosterBinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,27 +46,18 @@ public class CommentListFragment extends Fragment implements BottomSheet {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comment_list, container, false);
 
-        mCloseIconButton = view.findViewById(R.id.img_down_arrow);
-        mCloseIconButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mInteractionListener.onCloseFragment();
-            }
-        });
-
         if (mUseAsBottomSheet) {
-            mCommentListViewRoot = view.findViewById(R.id.fl_comment_list_view_root);
-            mCommentViewRoot = view.findViewById(R.id.rl_comment_view_root);
+            mCommentPosterBinder = new CommentPosterBinder(view);
+            mCommentsViewerBinder = new CommentsViewerBinder(view,
+                    new CommentsViewerBinder.ActionListener() {
+                        @Override
+                        public void onCloseButtonClick() {
+                            mInteractionListener.onCloseFragment();
+                        }
+                    });
         }
 
-        mIsViewCreated = true;
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mIsViewCreated = false;
     }
 
     @Override
@@ -88,23 +77,26 @@ public class CommentListFragment extends Fragment implements BottomSheet {
 
     @Override
     public void onBottomSheetStateChanged(int newState) {
-        if (mCommentListViewRoot == null || mCommentViewRoot == null) return;
+        if (mCommentsViewerBinder == null || mCommentPosterBinder == null) return;
+        
+        final View commentPosterRoot = mCommentPosterBinder.getRootView();
+        final View commentsViewerRoot = mCommentsViewerBinder.getRootView();
 
         if (newState == STATE_EXPANDED &&
                 (mPrevSheetState == STATE_SETTLING || mPrevSheetState == STATE_DRAGGING)) {
             // When expanded
-            int cx = mCommentViewRoot.getLeft() + mCommentViewRoot.getWidth() / 2;
-            int cy = mCommentViewRoot.getTop() + mCommentViewRoot.getHeight() / 2;
+            int cx = commentPosterRoot.getLeft() + commentPosterRoot.getWidth() / 2;
+            int cy = commentPosterRoot.getTop() + commentPosterRoot.getHeight() / 2;
             int startRad = 0;
-            int endRad = (int) Math.hypot(mCommentListViewRoot.getWidth(), mCommentListViewRoot.getHeight());
-            Animator revealAnim = ViewAnimationUtils.createCircularReveal(mCommentListViewRoot, cx, cy, startRad, endRad);
+            int endRad = (int) Math.hypot(commentsViewerRoot.getWidth(), commentsViewerRoot.getHeight());
+            Animator revealAnim = ViewAnimationUtils.createCircularReveal(commentsViewerRoot, cx, cy, startRad, endRad);
             revealAnim.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mCommentViewRoot.setVisibility(View.GONE);
+                    commentPosterRoot.setVisibility(View.GONE);
                 }
             });
-            mCommentListViewRoot.setVisibility(View.VISIBLE);
+            commentsViewerRoot.setVisibility(View.VISIBLE);
             revealAnim.start();
 
         } else
@@ -112,18 +104,18 @@ public class CommentListFragment extends Fragment implements BottomSheet {
                 (newState == STATE_DRAGGING || newState == STATE_SETTLING)) {
             // When began to collapse
             // When expanded
-            int cx = mCommentViewRoot.getLeft() + mCommentViewRoot.getWidth() / 2;
-            int cy = mCommentViewRoot.getTop() + mCommentViewRoot.getHeight() / 2;
-            int startRad = (int) Math.hypot(mCommentListViewRoot.getWidth(), mCommentListViewRoot.getHeight());
+            int cx = commentPosterRoot.getLeft() + commentPosterRoot.getWidth() / 2;
+            int cy = commentPosterRoot.getTop() + commentPosterRoot.getHeight() / 2;
+            int startRad = (int) Math.hypot(commentsViewerRoot.getWidth(), commentsViewerRoot.getHeight());
             int endRad = 0;
-            Animator closeAnim = ViewAnimationUtils.createCircularReveal(mCommentListViewRoot, cx, cy, startRad, endRad);
+            Animator closeAnim = ViewAnimationUtils.createCircularReveal(commentsViewerRoot, cx, cy, startRad, endRad);
             closeAnim.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mCommentListViewRoot.setVisibility(View.GONE);
+                    commentsViewerRoot.setVisibility(View.GONE);
                 }
             });
-            mCommentViewRoot.setVisibility(View.VISIBLE);
+            commentPosterRoot.setVisibility(View.VISIBLE);
             closeAnim.start();
         }
 

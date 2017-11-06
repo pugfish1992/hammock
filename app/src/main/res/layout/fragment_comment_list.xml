@@ -7,8 +7,8 @@
                 android:background="@color/cardview_light_background"
                 android:elevation="6dp"
                 android:clickable="true">
-    <include layout="@layout/comment_view_with_icon"/>
+    <include layout="@layout/comment_poster"/>
     <include
-        layout="@layout/comment_list_view"
+        layout="@layout/comments_viewer"
         android:visibility="gone"/>
 </FrameLayout>

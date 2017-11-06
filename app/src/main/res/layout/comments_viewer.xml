@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/fl_comment_list_view_root"
+             android:id="@+id/comments_viewer_fl_root"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
     android:background="@color/primary">
@@ -13,7 +13,7 @@
         android:paddingRight="16dp"
         android:paddingEnd="16dp">
         <ImageView
-            android:id="@+id/img_down_arrow"
+            android:id="@+id/comments_viewer_img_close_button"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"
@@ -25,11 +25,11 @@
             android:clickable="true"/>
 
         <TextView
-            android:id="@+id/txt_comment_count"
+            android:id="@+id/comments_viewer_txt_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/txt_comment_title"
-            android:layout_toStartOf="@+id/txt_comment_title"
+            android:layout_toLeftOf="@+id/comments_viewer_txt_title"
+            android:layout_toStartOf="@+id/comments_viewer_txt_title"
             android:paddingEnd="4dp"
             android:paddingRight="4dp"
             android:paddingStart="0dp"
@@ -40,7 +40,7 @@
             android:fontFamily="sans-serif-smallcaps"
             android:text="12"/>
         <TextView
-            android:id="@+id/txt_comment_title"
+            android:id="@+id/comments_viewer_txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -50,6 +50,7 @@
             android:text="Comments"/>
 
         <ImageView
+            android:id="@+id/comments_viewer_img_filter_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
@@ -62,7 +63,7 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_comment_list"
+        android:id="@+id/comments_viewer_recycler_comments_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </FrameLayout>

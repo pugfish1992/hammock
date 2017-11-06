@@ -75,7 +75,7 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
 
             commentAdapter = new MiniCommentAdapter(2, null);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-            commentList = view.findViewById(R.id.recycler_comment_list);
+            commentList = view.findViewById(R.id.comments_viewer_recycler_comments_list);
             commentList.setLayoutManager(layoutManager);
             commentList.setAdapter(commentAdapter);
 

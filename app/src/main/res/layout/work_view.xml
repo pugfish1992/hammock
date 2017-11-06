@@ -39,7 +39,7 @@
             android:layout_marginBottom="24dp"
             android:text="work summary..."/>
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_comment_list"
+            android:id="@+id/comments_viewer_recycler_comments_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"/>

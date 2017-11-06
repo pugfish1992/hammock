@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.pugfish1992.hammock.ui.CommentListFragment"
+                android:background="@color/cardview_light_background"
+                android:elevation="6dp"
+                android:clickable="true">
+    <include layout="@layout/comment_view_with_icon"/>
+    <include
+        layout="@layout/comment_list_view"
+        android:visibility="gone"/>
+</FrameLayout>

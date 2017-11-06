@@ -49,13 +49,13 @@ public class ProjectAdapter extends WorkAdapterBase<ProjectAdapter.ProjectHolder
         @LayoutRes int layoutId;
         switch (viewType) {
             case TYPE_RIGHT_SIDE_THUMB_CARD:
-                layoutId = R.layout.item_project_card_right_side_thumb;
+                layoutId = R.layout.project_view_right_side_thumb;
                 break;
             case TYPE_LEFT_SIDE_THUMB_CARD:
-                layoutId = R.layout.item_project_card_left_side_thumb;
+                layoutId = R.layout.project_view_left_side_thumb;
                 break;
             case TYPE_LARGE_SIZE_CARD:
-                layoutId = R.layout.item_project_card_large;
+                layoutId = R.layout.project_view_large;
                 break;
             default:
                 // Should not be reached

@@ -44,5 +44,5 @@
             android:layout_height="wrap_content"
             android:overScrollMode="never"/>
     </LinearLayout>
-    <include layout="@layout/completed_work_card_mask"/>
+    <include layout="@layout/mask_for_completed_work_view"/>
 </android.support.v7.widget.CardView>

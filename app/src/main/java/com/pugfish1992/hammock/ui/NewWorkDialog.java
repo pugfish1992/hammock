@@ -34,7 +34,7 @@ public class NewWorkDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater()
-                .inflate(R.layout.cmp_new_work_dialog, null);
+                .inflate(R.layout.widget_new_work_dialog, null);
 
         final TextInputLayout inputNameLayout = view.findViewById(R.id.input_name_layout);
         final TextInputEditText nameEditor = view.findViewById(R.id.edit_name);

@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.google.common.base.Preconditions;
@@ -23,12 +25,16 @@ public class WorkDetailsActivity extends AppCompatActivity
         implements
         WorkAdapterBase.ItemCardClickListener,
         NewWorkDialog.OnCreateNewWorkListener,
-        TextInputDialog.TextInputListener {
+        TextInputDialog.TextInputListener,
+        CommentListFragment.InteractionListener {
 
     public static final String KEY_TARGET_WORK_ID = "WorkDetailsActivity:targetWorkId";
 
     private Work mTargetWork;
     private WorkAdapterBase mSubWorkAdapter;
+
+    // UI
+    private BottomSheetBehavior mSheetBehavior;
 
     public static Bundle makeExtras(@NonNull Work targetWork) {
         Bundle bundle = new Bundle();
@@ -76,6 +82,22 @@ public class WorkDetailsActivity extends AppCompatActivity
         RecyclerView workList = (RecyclerView) findViewById(R.id.recycler_view);
         workList.setLayoutManager(new LinearLayoutManager(this));
         workList.setAdapter(mSubWorkAdapter);
+
+        // # Bottom Sheet
+
+        final CommentListFragment commentListFragment =
+                (CommentListFragment) getSupportFragmentManager().findFragmentById(R.id.frg_comment_list_as_bottom_sheet);
+
+        mSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.frg_comment_list_as_bottom_sheet));
+        mSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                commentListFragment.onBottomSheetStateChanged(newState);
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {}
+        });
     }
 
     private void onAddNewWork() {
@@ -133,5 +155,14 @@ public class WorkDetailsActivity extends AppCompatActivity
 
             mTargetWork.attachComment(comment);
         }
+    }
+
+    /**
+     * INTERFACE IMPL -> CommentListFragment.InteractionListener
+     * ---------- */
+
+    @Override
+    public void onCloseFragment() {
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

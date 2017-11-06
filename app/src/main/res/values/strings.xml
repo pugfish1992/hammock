@@ -2,4 +2,7 @@
     <string name="app_name">Hammock</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_project_details">ProjectDetailsActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

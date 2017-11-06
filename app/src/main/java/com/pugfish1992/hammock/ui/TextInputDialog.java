@@ -59,7 +59,7 @@ public class TextInputDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater()
-                .inflate(R.layout.cmp_text_input_dialog, null);
+                .inflate(R.layout.widget_text_input_dialog, null);
 
         TextInputLayout inputLayout = view.findViewById(R.id.ipt_layout);
         inputLayout.setHintEnabled(true);

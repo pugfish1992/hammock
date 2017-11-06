@@ -32,7 +32,7 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
     @Override
     public WorkHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_work_card, parent, false);
+                .inflate(R.layout.work_view, parent, false);
         final WorkHolder holder = new WorkHolder(view, mContext);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

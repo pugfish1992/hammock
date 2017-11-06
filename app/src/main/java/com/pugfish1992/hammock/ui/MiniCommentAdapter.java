@@ -57,10 +57,10 @@ public class MiniCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         if (viewType == TYPE_VIEW_MORE_COMMENTS) {
-            View view = inflater.inflate(R.layout.item_view_more_comments, parent, false);
+            View view = inflater.inflate(R.layout.more_comments_view, parent, false);
             return new ViewMoreCommentsHolder(view);
         } else if (viewType == TYPE_MINI_COMMENT) {
-            View view = inflater.inflate(R.layout.item_comment_card_mini, parent, false);
+            View view = inflater.inflate(R.layout.comment_view_mini, parent, false);
             return new MiniCommentHolder(view);
         } else {
             // Should not be reached

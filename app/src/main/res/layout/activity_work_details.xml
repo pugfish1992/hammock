@@ -27,11 +27,21 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <!-- Bottom Sheet -->
+    <fragment
+        android:id="@+id/frg_comment_list_as_bottom_sheet"
+        android:name="com.pugfish1992.hammock.ui.CommentListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_peekHeight="98dp"
+        app:layout_behavior="@string/bottom_sheet_behavior"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="bottom|end">
+        android:layout_gravity="bottom|end"
+        android:visibility="invisible">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_new_sub_work"
             android:layout_width="wrap_content"

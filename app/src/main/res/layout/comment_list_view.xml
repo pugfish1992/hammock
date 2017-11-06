@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/fl_comment_list_view_root"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:background="@color/primary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp">
+        <ImageView
+            android:id="@+id/img_down_arrow"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_keyboard_arrow_down"
+            android:tint="@android:color/white"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/txt_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txt_comment_title"
+            android:layout_toStartOf="@+id/txt_comment_title"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary_light"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="12"/>
+        <TextView
+            android:id="@+id/txt_comment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary_light"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="Comments"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_filter_list"
+            android:tint="@android:color/white"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

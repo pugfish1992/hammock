@@ -7,6 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true">
     <ImageView
+        android:id="@+id/comment_poster_img_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="16dp"
@@ -54,9 +55,45 @@
         android:layout_marginRight="24dp"
         android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:textColor="@color/primary_dark"
+        android:textColor="@color/text_primary_dark"
         android:textSize="18sp"
         android:text="Swipe up to see all comments"
         android:maxLines="1"
         android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/comment_poster_ll_comment_counter_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@+id/comment_poster_img_icon"
+        android:layout_toEndOf="@id/comment_poster_img_icon"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/comment_poster_txt_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary_light"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="12"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary_light"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="Comments"/>
+    </LinearLayout>
+
 </RelativeLayout>

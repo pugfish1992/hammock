@@ -135,7 +135,7 @@ public class CommentsViewerBottomSheetBinder
         Transition transition = new AutoTransition();
         transition.setDuration(200);
         TransitionManager.beginDelayedTransition(mRoot, transition);
-        mPosterBinder.setShowNavigationMessage(showMessage);
+        mPosterBinder.setPosterMode(CommentPosterBinder.POSTER_MODE_NAVIGATION_MESS);
     }
 
     /**

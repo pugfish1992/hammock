@@ -7,5 +7,11 @@
              android:background="@color/cardview_light_background"
              app:behavior_peekHeight="@dimen/comment_poster_height"
              app:layout_behavior="@string/bottom_sheet_behavior">
+    <View
+        android:id="@+id/comment_list_bs_view_scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:visibility="gone"/>
     <include layout="@layout/comment_poster"/>
 </FrameLayout>

@@ -1,16 +1,17 @@
 package com.pugfish1992.hammock.ui.binder;
 
 import android.content.Context;
-import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Comment;
+import com.pugfish1992.hammock.ui.BottomSheetCallbackHelper;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ import java.util.List;
 public class CommentsViewerBottomSheetBinder
         implements
         CommentsViewerBinder.ActionListener,
-        CommentPosterBinder.ActionListener {
+        CommentPosterBinder.ActionListener,
+        BottomSheetCallbackHelper.StateChangeListener {
 
     private final View mRoot;
     // comment-poster and brief-comments-viewer
@@ -43,9 +45,13 @@ public class CommentsViewerBottomSheetBinder
         mPreviewerRoot = root.findViewById(R.id.comments_sheet_preview_content_root);
         mMainViewerRoot = mViewerBinder.getRootView();
 
+        mSheetBehavior = BottomSheetBehavior.from(mRoot);
+        BottomSheetCallbackHelper sheetCallbackHelper = new BottomSheetCallbackHelper();
+        sheetCallbackHelper.setStateChangeListener(this);
+        sheetCallbackHelper.attachToHost(mSheetBehavior);
+
         // default status
         mBriefViewerBinder.setup(context, comments);
-        mSheetBehavior = BottomSheetBehavior.from(mRoot);
         setIsExpanded(false);
     }
 
@@ -109,5 +115,14 @@ public class CommentsViewerBottomSheetBinder
     @Override
     public void onPosterClick() {
         this.setIsExpanded(true);
+    }
+
+    /**
+     * INTERFACE IMPL -> BottomSheetCallbackHelper.StateChangeListener
+     * ---------- */
+
+    @Override
+    public void onSheetStateChanged(@NonNull BottomSheetCallbackHelper.SheetState state) {
+        Log.d("mylog", "[changed] " + state.name());
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/poster_rl_root_view"
+    android:id="@+id/work_poster_rl_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/comment_poster_height"
+    android:layout_height="@dimen/work_poster_height"
     android:background="?attr/selectableItemBackground"
     android:clickable="true">
     <ImageView
@@ -12,11 +12,11 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_comment"
-        android:background="@drawable/circler_light_green_background"
+        android:src="@drawable/ic_dvr"
+        android:background="@drawable/circler_light_blue_background"
         android:scaleType="center"/>
     <TextView
-        android:id="@+id/poster_txt_time_label"
+        android:id="@+id/work_poster_txt_time_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -29,7 +29,7 @@
         android:text="5 hours ago"
         android:fontFamily="sans-serif-smallcaps"/>
     <TextView
-        android:id="@+id/poster_txt_body_text"
+        android:id="@+id/work_poster_txt_body_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="72dp"
@@ -37,7 +37,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/poster_txt_time_label"
+        android:layout_below="@+id/work_poster_txt_time_label"
         android:textSize="13sp"
         android:fontFamily="sans-serif"
         android:maxLines="3"
@@ -45,7 +45,7 @@
         android:textColor="@color/text_primary_dark"
         android:text="Add 8dp of padding at the top and bottom of a list, except for lists with subheaders, which have their own padding."/>
     <TextView
-        android:id="@+id/poster_txt_navigation_message"
+        android:id="@+id/works_poster_txt_navigation_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="72dp"
@@ -56,7 +56,7 @@
         android:fontFamily="sans-serif-smallcaps"
         android:textColor="@color/primary_dark"
         android:textSize="18sp"
-        android:text="Swipe up to see all comments"
+        android:text="Swipe up to see all works"
         android:maxLines="1"
         android:visibility="gone"/>
 </RelativeLayout>

@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onFabClick() {
-        NewWorkDialog dialog = new NewWorkDialog();
-        dialog.show(getSupportFragmentManager(), null);
+//        NewWorkDialog dialog = new NewWorkDialog();
+//        dialog.show(getSupportFragmentManager(), null);
+        Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
     }
 
     @Override

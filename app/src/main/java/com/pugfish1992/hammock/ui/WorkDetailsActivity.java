@@ -26,8 +26,7 @@ public class WorkDetailsActivity extends AppCompatActivity
         implements
         WorkAdapterBase.ItemCardClickListener,
         NewWorkDialog.OnCreateNewWorkListener,
-        TextInputDialog.TextInputListener,
-        CommentListFragment.InteractionListener {
+        TextInputDialog.TextInputListener {
 
     public static final String KEY_TARGET_WORK_ID = "WorkDetailsActivity:targetWorkId";
 
@@ -147,14 +146,5 @@ public class WorkDetailsActivity extends AppCompatActivity
 
             mTargetWork.attachComment(comment);
         }
-    }
-
-    /**
-     * INTERFACE IMPL -> CommentListFragment.InteractionListener
-     * ---------- */
-
-    @Override
-    public void onCloseFragment() {
-        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

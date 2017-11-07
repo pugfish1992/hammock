@@ -1,13 +1,19 @@
 package com.pugfish1992.hammock.ui.binder;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.transition.AutoTransition;
+import android.support.transition.Transition;
+import android.support.transition.TransitionManager;
 import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Comment;
@@ -25,7 +31,7 @@ public class CommentsViewerBottomSheetBinder
         CommentPosterBinder.ActionListener,
         BottomSheetCallbackHelper.StateChangeListener {
 
-    private final View mRoot;
+    private final ViewGroup mRoot;
     // comment-poster and brief-comments-viewer
     private final View mPreviewerRoot;
     private final View mMainViewerRoot;
@@ -52,6 +58,8 @@ public class CommentsViewerBottomSheetBinder
 
         // default status
         mBriefViewerBinder.setup(context, comments);
+        mPreviewerRoot.setVisibility(View.VISIBLE);
+        mMainViewerRoot.setVisibility(View.GONE);
         setIsExpanded(false);
     }
 
@@ -83,20 +91,51 @@ public class CommentsViewerBottomSheetBinder
                 isExpanded
                 ? BottomSheetBehavior.STATE_EXPANDED
                 : BottomSheetBehavior.STATE_COLLAPSED);
-
-        if (isExpanded) {
-            mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            mPreviewerRoot.setVisibility(View.GONE);
-            mMainViewerRoot.setVisibility(View.VISIBLE);
-        } else {
-            mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            mMainViewerRoot.setVisibility(View.GONE);
-            mPreviewerRoot.setVisibility(View.VISIBLE);
-        }
     }
 
     public void swapComments(@NonNull List<Comment> comments) {
         mBriefViewerBinder.swapComments(comments);
+    }
+    
+    private void showMainViewerWithAnim() {
+        final View commentPoster = mPosterBinder.getRootView();
+        int cx = commentPoster.getLeft() + commentPoster.getWidth() / 2;
+        int cy = commentPoster.getTop() + commentPoster.getHeight() / 2;
+        int startRad = 0;
+        int endRad = (int) Math.hypot(mMainViewerRoot.getWidth(), mMainViewerRoot.getHeight());
+        Animator revealAnim = ViewAnimationUtils.createCircularReveal(mMainViewerRoot, cx, cy, startRad, endRad);
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mPreviewerRoot.setVisibility(View.GONE);
+            }
+        });
+        mMainViewerRoot.setVisibility(View.VISIBLE);
+        revealAnim.start();
+    }
+    
+    private void hideMainViewerWithAnim() {
+        final View commentPoster = mPosterBinder.getRootView();
+        int cx = commentPoster.getLeft() + commentPoster.getWidth() / 2;
+        int cy = commentPoster.getTop() + commentPoster.getHeight() / 2;
+        int startRad = (int) Math.hypot(mMainViewerRoot.getWidth(), mMainViewerRoot.getHeight());
+        int endRad = 0;
+        Animator closeAnim = ViewAnimationUtils.createCircularReveal(mMainViewerRoot, cx, cy, startRad, endRad);
+        closeAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mMainViewerRoot.setVisibility(View.GONE);
+            }
+        });
+        mPreviewerRoot.setVisibility(View.VISIBLE);
+        closeAnim.start();
+    }
+
+    private void showOrHideNavigationMessageOnPosterWithAnim(boolean showMessage) {
+        Transition transition = new AutoTransition();
+        transition.setDuration(200);
+        TransitionManager.beginDelayedTransition(mRoot, transition);
+        mPosterBinder.setShowNavigationMessage(showMessage);
     }
 
     /**
@@ -123,6 +162,22 @@ public class CommentsViewerBottomSheetBinder
 
     @Override
     public void onSheetStateChanged(@NonNull BottomSheetCallbackHelper.SheetState state) {
-        Log.d("mylog", "[changed] " + state.name());
+        switch (state) {
+            case EXPANDED:
+                showMainViewerWithAnim();
+                break;
+
+            case EXPANDED_BUT_COULD_COLLAPSED:
+                hideMainViewerWithAnim();
+                break;
+
+            case SLIDING_BETWEEN_COLLAPSED_EXPANDED:
+                showOrHideNavigationMessageOnPosterWithAnim(true);
+                break;
+
+            case WILL_COLLAPSED_FROM_TOP:
+                showOrHideNavigationMessageOnPosterWithAnim(false);
+                break;
+        }
     }
 }

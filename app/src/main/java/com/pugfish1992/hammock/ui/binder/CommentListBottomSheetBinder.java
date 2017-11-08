@@ -7,21 +7,20 @@ import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.transition.AutoTransition;
-import android.support.transition.Transition;
-import android.support.transition.TransitionManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Comment;
-import com.pugfish1992.hammock.ui.BottomSheetCallbackHelper;
+import com.pugfish1992.hammock.ui.utils.BottomSheetCallbackHelper;
 import com.pugfish1992.hammock.ui.CommentAdapter;
 import com.pugfish1992.hammock.ui.decoration.SpacerItemDecoration;
+import com.pugfish1992.hammock.ui.utils.ScrollingWatcher;
 import com.pugfish1992.hammock.util.ResUtils;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class CommentListBottomSheetBinder
         mScrim = mRoot.findViewById(R.id.comment_list_bs_view_scrim);
         mScrim.setVisibility(View.INVISIBLE);
 
-        mPosterBinder = new CommentPosterBinder(mRoot);
+        mPosterBinder = new CommentPosterBinder(mRoot, context);
         mPosterBinder.setCommentCountLabel(comments != null ? comments.size() : 0);
 
         mSheetBehavior = BottomSheetBehavior.from(mRoot);
@@ -70,6 +69,24 @@ public class CommentListBottomSheetBinder
         spacerItemDecoration.setBottomSpace(resUtils.getPx(R.dimen.comment_list_bs_list_bottom_offset));
         spacerItemDecoration.setSpaceBetweenItems(resUtils.getPx(R.dimen.comment_list_bs_cards_offset));
         commentList.addItemDecoration(spacerItemDecoration);
+
+        ScrollingWatcher scrollingWatcher = new ScrollingWatcher(commentList);
+        scrollingWatcher.setCallback(new ScrollingWatcher.Callback() {
+            @Override
+            public void onScrolled(ScrollingWatcher scrollingWatcher) {
+                int posterHeight = mPosterBinder.getRootView().getHeight();
+                int diff = posterHeight - scrollingWatcher.getScrollOffsetY();
+
+                if (diff < 0) {
+                    mPosterBinder.getRootView().setVisibility(View.INVISIBLE);
+                    return;
+                }
+
+                mPosterBinder.getRootView().setVisibility(View.VISIBLE);
+                float alpha = Math.abs((float) diff / posterHeight);
+                mPosterBinder.getRootView().setAlpha(alpha);
+            }
+        });
     }
 
     public int getPeekHeight() {

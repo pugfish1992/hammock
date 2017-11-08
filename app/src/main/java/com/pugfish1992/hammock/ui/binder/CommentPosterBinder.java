@@ -1,7 +1,9 @@
 package com.pugfish1992.hammock.ui.binder;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.IntDef;
+import android.support.annotation.Px;
 import android.support.transition.AutoTransition;
 import android.support.transition.TransitionManager;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pugfish1992.hammock.R;
+import com.pugfish1992.hammock.util.ResUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,7 +34,7 @@ public class CommentPosterBinder {
 
     @PosterMode private int mCurrentPosterMode = POSTER_MODE_INVALID;
 
-    public CommentPosterBinder(View root) {
+    public CommentPosterBinder(View root, Context context) {
         mRoot = root.findViewById(R.id.poster_rl_root_view);
         mBodyText = mRoot.findViewById(R.id.poster_txt_body_text);
         mTimeLabel = mRoot.findViewById(R.id.poster_txt_time_label);

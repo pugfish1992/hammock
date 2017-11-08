@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Comment;
-import com.pugfish1992.hammock.ui.BottomSheetCallbackHelper;
+import com.pugfish1992.hammock.ui.utils.BottomSheetCallbackHelper;
 
 import java.util.List;
 
@@ -28,7 +28,6 @@ import java.util.List;
 public class CommentsViewerBottomSheetBinder
         implements
         CommentsViewerBinder.ActionListener,
-        CommentPosterBinder.ActionListener,
         BottomSheetCallbackHelper.StateChangeListener {
 
     private final ViewGroup mRoot;
@@ -42,8 +41,7 @@ public class CommentsViewerBottomSheetBinder
     private final BottomSheetBehavior mSheetBehavior;
 
     public CommentsViewerBottomSheetBinder(View root, Context context, @Nullable List<Comment> comments) {
-        mPosterBinder = new CommentPosterBinder(root);
-        mPosterBinder.setActionListener(this);
+        mPosterBinder = new CommentPosterBinder(root, context);
 
         mBriefViewerBinder = new BriefCommentsViewerBinder(root);
         mViewerBinder = new CommentsViewerBinder(root, context, this, comments);
@@ -145,15 +143,6 @@ public class CommentsViewerBottomSheetBinder
     @Override
     public void onCloseButtonClick() {
         this.setIsExpanded(false);
-    }
-
-    /**
-     * INTERFACE IMPL -> CommentPosterBinder.ActionListener
-     * ---------- */
-
-    @Override
-    public void onPosterClick() {
-        this.setIsExpanded(true);
     }
 
     /**

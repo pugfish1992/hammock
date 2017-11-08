@@ -2,20 +2,17 @@ package com.pugfish1992.hammock.ui.binder;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Comment;
 import com.pugfish1992.hammock.ui.CommentAdapter;
-import com.pugfish1992.hammock.ui.ViewUtils;
+import com.pugfish1992.hammock.ui.utils.ViewUtils;
 import com.pugfish1992.hammock.ui.decoration.SpacerItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

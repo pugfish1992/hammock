@@ -1,4 +1,4 @@
-package com.pugfish1992.hammock.ui;
+package com.pugfish1992.hammock.ui.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;

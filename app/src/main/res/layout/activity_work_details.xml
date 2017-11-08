@@ -77,11 +77,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_add"
+        app:backgroundTint="#4aa4f2"
         android:tint="@color/primary"
         app:layout_anchor="@+id/fl_comments_viewer_bs_root"
         app:layout_anchorGravity="top|center_horizontal"
         app:elevation="8dp"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_of_comments_viewer"
@@ -92,6 +93,6 @@
         android:tint="@color/primary"
         android:layout_gravity="bottom|center_horizontal"
         app:elevation="8dp"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
 </android.support.design.widget.CoordinatorLayout>

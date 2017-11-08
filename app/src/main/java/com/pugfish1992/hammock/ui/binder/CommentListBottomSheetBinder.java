@@ -10,7 +10,6 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -70,6 +69,7 @@ public class CommentListBottomSheetBinder
         spacerItemDecoration.setSpaceBetweenItems(resUtils.getPx(R.dimen.comment_list_bs_cards_offset));
         commentList.addItemDecoration(spacerItemDecoration);
 
+        // Fade out CommentPoster along with scrolling
         ScrollingWatcher scrollingWatcher = new ScrollingWatcher(commentList);
         scrollingWatcher.setCallback(new ScrollingWatcher.Callback() {
             @Override

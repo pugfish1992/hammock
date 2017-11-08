@@ -10,5 +10,8 @@
     <dimen name="comment_list_bs_cards_offset">8dp</dimen>
     <dimen name="comment_list_bs_elevation">6dp</dimen>
 
+    <dimen name="work_list_bs_list_side_offset">6dp</dimen>
+    <dimen name="work_list_bs_list_bottom_offset">48dp</dimen>
+    <dimen name="work_list_bs_cards_offset">8dp</dimen>
     <dimen name="work_list_bs_elevation">4dp</dimen>
 </resources>

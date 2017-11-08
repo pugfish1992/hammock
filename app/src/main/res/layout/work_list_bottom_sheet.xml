@@ -7,5 +7,15 @@
              android:background="@color/android_view_background_light"
              app:behavior_peekHeight="@dimen/work_poster_height"
              app:layout_behavior="@string/bottom_sheet_behavior">
+    <View
+        android:id="@+id/work_list_bs_view_scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:visibility="gone"/>
     <include layout="@layout/work_poster"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/work_list_bs_recycler_work_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

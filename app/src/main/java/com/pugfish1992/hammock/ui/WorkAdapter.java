@@ -50,7 +50,6 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
         holder.title.setText(work.getOverview().getTitle());
         holder.summary.setText(work.getOverview().getSummary());
         holder.commentAdapter.swapData(work.getComments());
-        holder.completedMask.setVisibility(work.isCompleted() ? View.VISIBLE : View.GONE);
     }
 
     /* ------------------------------------------------------------------------------- *
@@ -63,7 +62,6 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
         final TextView title;
         final TextView summary;
         final RecyclerView commentList;
-        final ViewGroup completedMask;
         final MiniCommentAdapter commentAdapter;
 
         WorkHolder(View view, Context context) {
@@ -71,7 +69,6 @@ public class WorkAdapter extends WorkAdapterBase<WorkAdapter.WorkHolder> {
             baseCard = (CardView) view;
             title = view.findViewById(R.id.txt_title);
             summary = view.findViewById(R.id.txt_summary);
-            completedMask = view.findViewById(R.id.completed_mask);
 
             commentAdapter = new MiniCommentAdapter(2, null);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);

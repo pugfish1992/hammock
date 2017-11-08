@@ -60,7 +60,7 @@ public abstract class WorkAdapterBase<VH extends RecyclerView.ViewHolder>
      * INTERFACE FOR ITEM TOUCH EVENT
      * ------------------------------------------------------------------------------- */
 
-    interface ItemCardClickListener {
+    public interface ItemCardClickListener {
         void onItemCardClick(int position);
     }
 }

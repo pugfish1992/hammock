@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_comment"
-        android:background="@drawable/circler_light_green_background"
+        android:background="@drawable/circular_light_green_background"
         android:scaleType="center"/>
     <TextView
         android:id="@+id/poster_txt_time_label"

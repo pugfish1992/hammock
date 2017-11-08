@@ -14,6 +14,9 @@ import android.view.MenuItem;
 
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Work;
+import com.pugfish1992.hammock.ui.adapter.ProjectAdapter;
+import com.pugfish1992.hammock.ui.adapter.WorkAdapterBase;
+import com.pugfish1992.hammock.ui.widget.NewWorkDialog;
 
 public class MainActivity extends AppCompatActivity
         implements
@@ -45,10 +48,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onFabClick() {
-//        NewWorkDialog dialog = new NewWorkDialog();
-//        dialog.show(getSupportFragmentManager(), null);
-        Intent intent = new Intent(this, TestActivity.class);
-        startActivity(intent);
+        NewWorkDialog dialog = new NewWorkDialog();
+        dialog.show(getSupportFragmentManager(), null);
     }
 
     @Override

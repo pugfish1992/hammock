@@ -1,4 +1,4 @@
-package com.pugfish1992.hammock.ui;
+package com.pugfish1992.hammock.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +42,7 @@ public abstract class WorkAdapterBase<VH extends RecyclerView.ViewHolder>
         notifyItemInserted(mWorks.size() - 1);
     }
 
-    Work getAt(int position) {
+    public Work getAt(int position) {
         return mWorks.get(position);
     }
 

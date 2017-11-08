@@ -23,6 +23,8 @@ import android.widget.TextView;
 import static com.google.common.base.Preconditions.checkNotNull;
 import com.pugfish1992.hammock.R;
 import com.pugfish1992.hammock.model.Work;
+import com.pugfish1992.hammock.ui.adapter.CommentAdapter;
+import com.pugfish1992.hammock.ui.adapter.WorkAdapter;
 import com.pugfish1992.hammock.ui.decoration.SpacerItemDecoration;
 import com.pugfish1992.hammock.ui.utils.BottomSheetCallbackHelper;
 import com.pugfish1992.hammock.ui.utils.ScrollingWatcher;
@@ -81,6 +83,10 @@ public class WorkDetailsActivity extends AppCompatActivity
         setupCommentsViewerBottomSheet();
         invalidateBottomSheetTitleMessage();
     }
+
+    /**
+     * BOTTOM SHEETS
+     * ---------------- */
 
     private void setupSubWorksViewerBottomSheet() {
         ResUtils resUtils = new ResUtils(this);

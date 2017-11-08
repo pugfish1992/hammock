@@ -1,4 +1,4 @@
-package com.pugfish1992.hammock.ui;
+package com.pugfish1992.hammock.ui.widget;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

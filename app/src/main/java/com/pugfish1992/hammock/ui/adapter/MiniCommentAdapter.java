@@ -1,4 +1,4 @@
-package com.pugfish1992.hammock.ui;
+package com.pugfish1992.hammock.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/comments_viewer_bs_header_height">
+    <ImageView
+        android:id="@+id/img_header_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_comment"
+        android:background="@drawable/circular_light_green_background"
+        android:scaleType="center"/>
+    <TextView
+        android:id="@+id/txt_header_poster_comment_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/text_secondary_dark"
+        android:textSize="13sp"
+        android:text="5 hours ago"
+        android:fontFamily="sans-serif-smallcaps"/>
+    <TextView
+        android:id="@+id/txt_header_poster_comment_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/txt_header_poster_comment_time_label"
+        android:textSize="13sp"
+        android:fontFamily="sans-serif"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/text_primary_dark"
+        android:text="Add 8dp of padding at the top and bottom of a list, except for lists with subheaders, which have their own padding."/>
+    <TextView
+        android:id="@+id/txt_header_navigation_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/text_primary_dark"
+        android:textSize="18sp"
+        android:text="Swipe up to see all comments"
+        android:maxLines="1"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/txt_header_title_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@+id/img_header_icon"
+        android:layout_toEndOf="@id/img_header_icon"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/text_primary_light"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="12 Comments"
+        android:visibility="gone"/>
+
+</RelativeLayout>

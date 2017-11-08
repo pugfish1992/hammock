@@ -6,53 +6,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pugfish1992.hammock.ui.WorkDetailsActivity">
-
+    tools:context="com.pugfish1992.hammock.ui.WorkDetailsActivity"
+    android:background="@color/primary">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <!-- Sub Works Viewer Bottom Sheet -->
+    <!-- Add elevation programmatically -->
+    <FrameLayout
+        android:id="@+id/fl_works_viewer_bs_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:background="@color/android_view_background_light"
+        app:behavior_peekHeight="@dimen/sub_works_viewer_bs_peek_height"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+        <View
+            android:id="@+id/view_works_viewer_bs_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primary"
+            android:visibility="invisible"/>
+        <include
+            android:id="@+id/include_works_viewer_bs_header"
+            layout="@layout/header_of_sub_works_viewer_bottom_sheet"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_works_viewer_bs_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
-    <!-- Bottom Sheet -->
-    <include layout="@layout/comments_viewer_bottom_sheet"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom|end"
-        android:visibility="gone">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_new_sub_work"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginRight="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add"/>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_new_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_chat"/>
-    </LinearLayout>
+    <!-- Comments Viewer Bottom Sheet -->
+    <!-- Add elevation programmatically -->
+    <FrameLayout android:id="@+id/fl_comments_viewer_bs_root"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@color/android_view_background_light"
+                 app:behavior_peekHeight="@dimen/comments_viewer_bs_peek_height"
+                 app:layout_behavior="@string/bottom_sheet_behavior">
+        <View
+            android:id="@+id/view_comments_viewer_bs_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primary"
+            android:visibility="invisible"/>
+        <include
+            android:id="@+id/include_comments_viewer_bs_header"
+            layout="@layout/header_of_comments_viewer_bottom_sheet"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_comments_viewer_bs_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

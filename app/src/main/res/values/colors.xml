@@ -12,5 +12,5 @@
     <color name="text_primary_light">#ffffffff</color>
     <color name="text_secondary_light">#b3ffffff</color> <!-- 70% -->
     <color name="text_disabled_light">#4dffffff</color> <!-- 30% -->
-    <color name="android_view_background_light">#eeeeee</color>
+    <color name="android_view_background_light">#fafafa</color>
 </resources>

@@ -14,4 +14,21 @@
     <dimen name="work_list_bs_list_bottom_offset">48dp</dimen>
     <dimen name="work_list_bs_cards_offset">8dp</dimen>
     <dimen name="work_list_bs_elevation">4dp</dimen>
+
+    <dimen name="sub_works_viewer_bs_header_height">98dp</dimen>
+    <dimen name="sub_works_viewer_bs_peek_height">196dp</dimen>
+    <dimen name="sub_works_viewer_bs_elevation">4dp</dimen>
+    <dimen name="sub_works_viewer_bs_list_side_offset">6dp</dimen>
+    <dimen name="sub_works_viewer_bs_list_items_offset">6dp</dimen>
+    <dimen name="sub_works_viewer_bs_list_bottom_offset">196dp</dimen>
+    <dimen name="sub_works_viewer_bs_list_top_offset">100dp</dimen>
+
+    <dimen name="comments_viewer_bs_header_height">98dp</dimen>
+    <dimen name="comments_viewer_bs_peek_height">98dp</dimen>
+    <dimen name="comments_viewer_bs_elevation">6dp</dimen>
+    <dimen name="comments_viewer_bs_list_side_offset">6dp</dimen>
+    <dimen name="comments_viewer_bs_list_items_offset">6dp</dimen>
+    <dimen name="comments_viewer_bs_list_bottom_offset">98dp</dimen>
+    <dimen name="comments_viewer_bs_list_top_offset">100dp</dimen>
+
 </resources>

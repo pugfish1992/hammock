@@ -11,7 +11,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_dvr"
-        android:background="@drawable/circular_light_blue_background"
+        android:tint="#4aa4f2"
         android:scaleType="center"/>
     <TextView
         android:id="@+id/txt_header_poster_sub_work_title"

@@ -28,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/android_view_background_light"
+        android:clickable="true"
+        android:focusable="true"
         app:behavior_peekHeight="@dimen/sub_works_viewer_bs_peek_height"
         app:layout_behavior="@string/bottom_sheet_behavior">
         <View
@@ -51,6 +53,8 @@
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
                  android:background="@color/android_view_background_light"
+                 android:clickable="true"
+                 android:focusable="true"
                  app:behavior_peekHeight="@dimen/comments_viewer_bs_peek_height"
                  app:layout_behavior="@string/bottom_sheet_behavior">
         <View
@@ -67,5 +71,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_of_works_viewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add"
+        android:tint="@color/primary"
+        app:layout_anchor="@+id/fl_comments_viewer_bs_root"
+        app:layout_anchorGravity="top|center_horizontal"
+        app:elevation="8dp"
+        android:visibility="gone"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_of_comments_viewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_add"
+        android:tint="@color/primary"
+        android:layout_gravity="bottom|center_horizontal"
+        app:elevation="8dp"
+        android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>

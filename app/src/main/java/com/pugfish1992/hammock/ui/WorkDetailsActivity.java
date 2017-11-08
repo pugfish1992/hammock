@@ -4,9 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.transition.AutoTransition;
 import android.support.transition.TransitionManager;
 import android.support.v4.view.ViewCompat;
@@ -14,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -34,13 +39,21 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class WorkDetailsActivity extends AppCompatActivity
-        implements WorkAdapter.ItemCardClickListener {
+        implements
+        WorkAdapter.ItemCardClickListener,
+        BottomSheetCallbackHelper.StateChangeListener {
 
     public static final String KEY_TARGET_WORK_ID = "WorkDetailsActivity:targetWorkId";
+
+    private static final int SHEET_TAG_WORKS_VIEWER = 0;
+    private static final int SHEET_TAG_COMMENTS_VIEWER = 1;
 
     private Work mTargetWork;
     private WorkAdapter mSubWorkAdapter;
     private CommentAdapter mCommentAdapter;
+
+    private FloatingActionButton mWorksViewerFab;
+    private FloatingActionButton mCommentsViewerFab;
 
     // Sub-Works Viewer Bottom Sheet
     private BottomSheetBehavior mSubWorksViewerSheetBehavior;
@@ -78,6 +91,9 @@ public class WorkDetailsActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mWorksViewerFab = findViewById(R.id.fab_of_works_viewer);
+        mCommentsViewerFab = findViewById(R.id.fab_of_comments_viewer);
 
         setupSubWorksViewerBottomSheet();
         setupCommentsViewerBottomSheet();
@@ -135,41 +151,8 @@ public class WorkDetailsActivity extends AppCompatActivity
 
         mSubWorksViewerSheetBehavior = BottomSheetBehavior.from(root);
         BottomSheetCallbackHelper sheetCallbackHelper = new BottomSheetCallbackHelper();
-        sheetCallbackHelper.attachToHost(mSubWorksViewerSheetBehavior);
-        sheetCallbackHelper.setStateChangeListener(
-                new BottomSheetCallbackHelper.StateChangeListener() {
-                    @Override
-                    public void onSheetStateChanged(
-                            @NonNull BottomSheetCallbackHelper.SheetState state) {
-
-                        switch (state) {
-                            case EXPANDED:
-                                showBottomSheetScrim(mSubWorksViewerScrim,
-                                        mSubWorksViewerHeaderBinder.getCenterOfIcon());
-                                mSubWorksViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_TITLE_MESSENGER);
-                                break;
-
-                            case EXPANDED_BUT_COULD_COLLAPSED:
-                                hideScrimWithAnim(mSubWorksViewerScrim,
-                                        mSubWorksViewerHeaderBinder.getCenterOfIcon());
-                                mSubWorksViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_NAVIGATION_MESSENGER);
-                                break;
-
-                            case COLLAPSED_BUT_COULD_EXPANDED:
-                                mSubWorksViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_NAVIGATION_MESSENGER);
-                                break;
-
-                            case COLLAPSED:
-                            case WILL_COLLAPSED_FROM_TOP:
-                                mSubWorksViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_POSTER);
-                                break;
-                        }
-                    }
-                });
+        sheetCallbackHelper.attachToHost(mSubWorksViewerSheetBehavior, SHEET_TAG_WORKS_VIEWER);
+        sheetCallbackHelper.setStateChangeListener(this);
     }
 
     private void setupCommentsViewerBottomSheet() {
@@ -218,41 +201,8 @@ public class WorkDetailsActivity extends AppCompatActivity
 
         mCommentsViewerSheetBehavior = BottomSheetBehavior.from(root);
         BottomSheetCallbackHelper sheetCallbackHelper = new BottomSheetCallbackHelper();
-        sheetCallbackHelper.attachToHost(mCommentsViewerSheetBehavior);
-        sheetCallbackHelper.setStateChangeListener(
-                new BottomSheetCallbackHelper.StateChangeListener() {
-                    @Override
-                    public void onSheetStateChanged(
-                            @NonNull BottomSheetCallbackHelper.SheetState state) {
-
-                        switch (state) {
-                            case EXPANDED:
-                                showBottomSheetScrim(mCommentsViewerScrim,
-                                        mCommentsViewerHeaderBinder.getCenterOfIcon());
-                                mCommentsViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_TITLE_MESSENGER);
-                                break;
-
-                            case EXPANDED_BUT_COULD_COLLAPSED:
-                                hideScrimWithAnim(mCommentsViewerScrim,
-                                        mCommentsViewerHeaderBinder.getCenterOfIcon());
-                                mCommentsViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_NAVIGATION_MESSENGER);
-                                break;
-
-                            case COLLAPSED_BUT_COULD_EXPANDED:
-                                mCommentsViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_NAVIGATION_MESSENGER);
-                                break;
-
-                            case COLLAPSED:
-                            case WILL_COLLAPSED_FROM_TOP:
-                                mCommentsViewerHeaderBinder.setPosterModeWithAnim(
-                                        HEADER_MODE_POSTER);
-                                break;
-                        }
-                    }
-                });
+        sheetCallbackHelper.attachToHost(mCommentsViewerSheetBehavior, SHEET_TAG_COMMENTS_VIEWER);
+        sheetCallbackHelper.setStateChangeListener(this);
     }
 
     private void showBottomSheetScrim(View scrim, Point revealPoint) {
@@ -288,8 +238,62 @@ public class WorkDetailsActivity extends AppCompatActivity
     }
 
     /**
+     * INTERFACE IMPL -> BottomSheetCallbackHelper.StateChangeListener
+     * ----------------------------------------------------------------- */
+
+    @Override
+    public void onSheetStateChanged(int tag, @NonNull BottomSheetCallbackHelper.SheetState state) {
+        switch (state) {
+            case EXPANDED:
+                if (tag == SHEET_TAG_WORKS_VIEWER) {
+                    showBottomSheetScrim(mSubWorksViewerScrim, mSubWorksViewerHeaderBinder.getCenterOfIcon());
+                    mSubWorksViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_TITLE_MESSENGER);
+                    mWorksViewerFab.show();
+                } else if (tag == SHEET_TAG_COMMENTS_VIEWER) {
+                    showBottomSheetScrim(mCommentsViewerScrim,mCommentsViewerHeaderBinder.getCenterOfIcon());
+                    mCommentsViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_TITLE_MESSENGER);
+                    mCommentsViewerFab.show();
+                }
+                break;
+
+            case EXPANDED_BUT_COULD_COLLAPSED:
+                if (tag == SHEET_TAG_WORKS_VIEWER) {
+                    hideScrimWithAnim(mSubWorksViewerScrim, mSubWorksViewerHeaderBinder.getCenterOfIcon());
+                    mSubWorksViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_NAVIGATION_MESSENGER);
+                    mWorksViewerFab.hide();
+                } else if (tag == SHEET_TAG_COMMENTS_VIEWER) {
+                    hideScrimWithAnim(mCommentsViewerScrim, mCommentsViewerHeaderBinder.getCenterOfIcon());
+                    mCommentsViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_NAVIGATION_MESSENGER);
+                    mCommentsViewerFab.hide();
+                }
+                break;
+
+            case COLLAPSED_BUT_COULD_EXPANDED:
+                if (tag == SHEET_TAG_WORKS_VIEWER) {
+                    mSubWorksViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_NAVIGATION_MESSENGER);
+
+                } else if (tag == SHEET_TAG_COMMENTS_VIEWER) {
+                    mCommentsViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_NAVIGATION_MESSENGER);
+                    mWorksViewerFab.hide();
+                }
+                break;
+
+            case COLLAPSED:
+            case WILL_COLLAPSED_FROM_TOP:
+                if (tag == SHEET_TAG_WORKS_VIEWER) {
+                    mSubWorksViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_POSTER);
+                    mWorksViewerFab.hide();
+                } else if (tag == SHEET_TAG_COMMENTS_VIEWER) {
+                    mCommentsViewerHeaderBinder.setPosterModeWithAnim(HEADER_MODE_POSTER);
+                    mCommentsViewerFab.hide();
+                }
+                break;
+        }
+    }
+
+    /**
      * INTERFACE IMPL -> WorkAdapter.ItemCardClickListener
-     * ---------- */
+     * ----------------------------------------------------------------- */
 
     @Override
     public void onItemCardClick(int position) {

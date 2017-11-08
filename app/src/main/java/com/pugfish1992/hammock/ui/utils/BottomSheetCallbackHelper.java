@@ -20,7 +20,7 @@ public class BottomSheetCallbackHelper {
         /**
          * Called when the bottom sheet changes its state.
          */
-        void onSheetStateChanged(@NonNull SheetState state);
+        void onSheetStateChanged(int tag, @NonNull SheetState state);
     }
 
     public enum SheetState {
@@ -60,6 +60,7 @@ public class BottomSheetCallbackHelper {
     private static final float THOLD_NEAR_COLLAPSE_TOP = 0.2f;
     private static final float THOLD_NEAR_COLLAPSE_BOTTOM = -0.2f;
 
+    private int mTag;
     private BottomSheetBehavior mHost;
     private SheetState mPrevSheetState;
     @StableBehaviorState
@@ -67,6 +68,12 @@ public class BottomSheetCallbackHelper {
     private StateChangeListener mStateChangeListener;
 
     public final void attachToHost(BottomSheetBehavior host) {
+        attachToHost(host, 0);
+    }
+
+    public final void attachToHost(BottomSheetBehavior host, int tag) {
+        mTag = tag;
+
         if (mHost != null) {
             mHost.setBottomSheetCallback(null);
         }
@@ -173,7 +180,7 @@ public class BottomSheetCallbackHelper {
         if (nextState != null && nextState != mPrevSheetState) {
             mPrevSheetState = nextState;
             if (mStateChangeListener != null) {
-                mStateChangeListener.onSheetStateChanged(nextState);
+                mStateChangeListener.onSheetStateChanged(mTag, nextState);
             }
         }
     }

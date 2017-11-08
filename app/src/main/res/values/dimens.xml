@@ -4,6 +4,11 @@
     <dimen name="comments_viewer_extra_start_offset">8dp</dimen>
     <dimen name="comment_poster_height">98dp</dimen>
     <dimen name="work_poster_height">98dp</dimen>
-    <dimen name="comment_list_bottom_sheet_elevation">6dp</dimen>
-    <dimen name="work_list_bottom_sheet_elevation">4dp</dimen>
+
+    <dimen name="comment_list_bs_list_side_offset">6dp</dimen>
+    <dimen name="comment_list_bs_list_bottom_offset">48dp</dimen>
+    <dimen name="comment_list_bs_cards_offset">8dp</dimen>
+    <dimen name="comment_list_bs_elevation">6dp</dimen>
+
+    <dimen name="work_list_bs_elevation">4dp</dimen>
 </resources>

@@ -4,7 +4,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:background="@color/cardview_light_background"
+             android:background="@color/android_view_background_light"
              app:behavior_peekHeight="@dimen/work_poster_height"
              app:layout_behavior="@string/bottom_sheet_behavior">
     <include layout="@layout/work_poster"/>

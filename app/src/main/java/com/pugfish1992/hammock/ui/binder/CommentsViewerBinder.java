@@ -44,7 +44,6 @@ public class CommentsViewerBinder {
         root.findViewById(R.id.comments_viewer_img_close_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("mylog", "ffffffffffffff");
                 if (mActionListener != null) {
                     mActionListener.onCloseButtonClick();
                 }

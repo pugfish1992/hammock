@@ -2,19 +2,29 @@ package com.pugfish1992.hammock.ui.binder;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.transition.AutoTransition;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
 import com.pugfish1992.hammock.R;
+import com.pugfish1992.hammock.model.Comment;
 import com.pugfish1992.hammock.ui.BottomSheetCallbackHelper;
+import com.pugfish1992.hammock.ui.CommentAdapter;
+import com.pugfish1992.hammock.ui.decoration.SpacerItemDecoration;
+import com.pugfish1992.hammock.util.ResUtils;
+
+import java.util.List;
 
 /**
  * This class depends res/layout/comment_list_bottom_sheet.xml
@@ -28,19 +38,38 @@ public class CommentListBottomSheetBinder
     private final CommentPosterBinder mPosterBinder;
 
     private final BottomSheetBehavior mSheetBehavior;
+    private final CommentAdapter mCommentAdapter;
 
-    public CommentListBottomSheetBinder(View root) {
+    public CommentListBottomSheetBinder(View root, Context context, @Nullable List<Comment> comments) {
         mRoot = root.findViewById(R.id.comment_list_bs_fl_root);
 
         mScrim = mRoot.findViewById(R.id.comment_list_bs_view_scrim);
         mScrim.setVisibility(View.INVISIBLE);
 
         mPosterBinder = new CommentPosterBinder(mRoot);
+        mPosterBinder.setCommentCountLabel(comments != null ? comments.size() : 0);
 
         mSheetBehavior = BottomSheetBehavior.from(mRoot);
         BottomSheetCallbackHelper sheetCallbackHelper = new BottomSheetCallbackHelper();
         sheetCallbackHelper.setStateChangeListener(this);
         sheetCallbackHelper.attachToHost(mSheetBehavior);
+
+        mCommentAdapter = new CommentAdapter(comments);
+
+        RecyclerView commentList = mRoot.findViewById(R.id.comment_list_bs_recycle_comment_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        commentList.setLayoutManager(layoutManager);
+        commentList.setAdapter(mCommentAdapter);
+
+        ResUtils resUtils = new ResUtils(context);
+        final int sideSpace = resUtils.getPx(R.dimen.comment_list_bs_list_side_offset);
+        SpacerItemDecoration spacerItemDecoration = new SpacerItemDecoration();
+        spacerItemDecoration.setTopSpace(resUtils.getPx(R.dimen.comment_poster_height));
+        spacerItemDecoration.setLeftSpace(sideSpace);
+        spacerItemDecoration.setRightSpace(sideSpace);
+        spacerItemDecoration.setBottomSpace(resUtils.getPx(R.dimen.comment_list_bs_list_bottom_offset));
+        spacerItemDecoration.setSpaceBetweenItems(resUtils.getPx(R.dimen.comment_list_bs_cards_offset));
+        commentList.addItemDecoration(spacerItemDecoration);
     }
 
     public int getPeekHeight() {
@@ -76,13 +105,6 @@ public class CommentListBottomSheetBinder
         closeAnim.start();
     }
 
-    private void changePosterModeWithAnim(@CommentPosterBinder.PosterMode int mode) {
-        Transition transition = new AutoTransition();
-        transition.setDuration(250);
-        TransitionManager.beginDelayedTransition(mRoot, transition);
-        mPosterBinder.setPosterMode(mode);
-    }
-
     /**
      * INTERFACE IMPL -> BottomSheetCallbackHelper.StateChangeListener
      * ---------- */
@@ -92,20 +114,21 @@ public class CommentListBottomSheetBinder
         switch (state) {
             case EXPANDED:
                 showScrimWithAnim();
-                changePosterModeWithAnim(CommentPosterBinder.POSTER_MODE_COUNTER);
+                mPosterBinder.setPosterModeWithAnim(CommentPosterBinder.POSTER_MODE_COUNTER);
                 break;
 
             case EXPANDED_BUT_COULD_COLLAPSED:
                 hideScrimWithAnim();
-                changePosterModeWithAnim(CommentPosterBinder.POSTER_MODE_NAVIGATION_MESS);
+                mPosterBinder.setPosterModeWithAnim(CommentPosterBinder.POSTER_MODE_NAVIGATION_MESS);
                 break;
 
-            case SLIDING_BETWEEN_COLLAPSED_EXPANDED:
-                changePosterModeWithAnim(CommentPosterBinder.POSTER_MODE_NAVIGATION_MESS);
+            case COLLAPSED_BUT_COULD_EXPANDED:
+                mPosterBinder.setPosterModeWithAnim(CommentPosterBinder.POSTER_MODE_NAVIGATION_MESS);
                 break;
 
+            case COLLAPSED:
             case WILL_COLLAPSED_FROM_TOP:
-                changePosterModeWithAnim(CommentPosterBinder.POSTER_MODE_VIEWER);
+                mPosterBinder.setPosterModeWithAnim(CommentPosterBinder.POSTER_MODE_VIEWER);
                 break;
         }
     }

@@ -2,6 +2,8 @@ package com.pugfish1992.hammock.ui.binder;
 
 import android.graphics.Point;
 import android.support.annotation.IntDef;
+import android.support.transition.AutoTransition;
+import android.support.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,12 +20,8 @@ import java.lang.annotation.RetentionPolicy;
 
 public class CommentPosterBinder {
 
-    public interface ActionListener {
-        void onPosterClick();
-    }
-
     // UI
-    private final View mRoot;
+    private final ViewGroup mRoot;
     private final TextView mBodyText;
     private final TextView mTimeLabel;
     private final TextView mNavigationMessage;
@@ -31,7 +29,7 @@ public class CommentPosterBinder {
     private final TextView mCommentCountLabel;
     private final ImageView mIcon;
 
-    private ActionListener mActionListener;
+    @PosterMode private int mCurrentPosterMode = POSTER_MODE_INVALID;
 
     public CommentPosterBinder(View root) {
         mRoot = root.findViewById(R.id.poster_rl_root_view);
@@ -42,30 +40,38 @@ public class CommentPosterBinder {
         mCommentCounter = mRoot.findViewById(R.id.comment_poster_ll_comment_counter_layout);
         mCommentCountLabel = mRoot.findViewById(R.id.comment_poster_txt_comment_count);
 
-        mRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mActionListener != null) {
-                    mActionListener.onPosterClick();
-                }
-            }
-        });
-
         setPosterMode(POSTER_MODE_VIEWER);
     }
 
-    public void setActionListener(ActionListener actionListener) {
-        mActionListener = actionListener;
-    }
-
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({POSTER_MODE_VIEWER, POSTER_MODE_NAVIGATION_MESS, POSTER_MODE_COUNTER})
+    @IntDef({POSTER_MODE_INVALID, POSTER_MODE_VIEWER, POSTER_MODE_NAVIGATION_MESS, POSTER_MODE_COUNTER})
     @interface PosterMode{}
+    private static final int POSTER_MODE_INVALID = -1;
     public static final int POSTER_MODE_VIEWER = 0;
     public static final int POSTER_MODE_NAVIGATION_MESS = 1;
     public static final int POSTER_MODE_COUNTER = 2;
 
     public void setPosterMode(@PosterMode int mode) {
+        setPosterMode(mode, false);
+    }
+
+    public void setPosterModeWithAnim(@PosterMode int mode) {
+        setPosterMode(mode, true);
+    }
+
+    public void setPosterMode(@PosterMode int mode, boolean animate) {
+        if (mCurrentPosterMode == mode) return;
+
+        if (animate) {
+            AutoTransition transition = new AutoTransition();
+            transition.setDuration(250);
+            transition.addTarget(mBodyText);
+            transition.addTarget(mTimeLabel);
+            transition.addTarget(mNavigationMessage);
+            transition.addTarget(mCommentCounter);
+            TransitionManager.beginDelayedTransition(mRoot);
+        }
+
         switch (mode) {
             case POSTER_MODE_VIEWER:
                 mBodyText.setVisibility(View.VISIBLE);
@@ -88,7 +94,10 @@ public class CommentPosterBinder {
                 mCommentCounter.setVisibility(View.VISIBLE);
                 break;
         }
+
+        mCurrentPosterMode = mode;
     }
+
 
     public View getRootView() {
         return mRoot;
@@ -99,6 +108,11 @@ public class CommentPosterBinder {
         point.x = mIcon.getLeft() + mIcon.getWidth() / 2;
         point.y = mIcon.getTop() + mIcon.getHeight() / 2;
         return point;
+    }
+
+    @PosterMode
+    public int getMode() {
+        return mCurrentPosterMode;
     }
 
     public void setBodyText(String text) {
